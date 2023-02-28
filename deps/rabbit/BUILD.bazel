@@ -1134,6 +1134,11 @@ rabbitmq_integration_suite(
     ],
 )
 
+rabbitmq_integration_suite(
+    name = "routing_SUITE",
+    size = "small",
+)
+
 assert_suites()
 
 filegroup(
