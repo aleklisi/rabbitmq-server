@@ -119,6 +119,7 @@ cluster_size_1_tests() ->
      ,max_packet_size_authenticated
      ,default_queue_type
      ,utf8
+     ,bind_exchange_to_exchange
     ].
 
 cluster_size_3_tests() ->
@@ -474,7 +475,8 @@ events(Config) ->
                                {pid, ConnectionPid}],
     assert_event_prop(ExpectedConnectionProps, E1),
 
-    {ok, _, _} = emqtt:subscribe(C, <<"TopicA">>, qos0),
+    Qos = 0,
+    {ok, _, _} = emqtt:subscribe(C, <<"TopicA">>, Qos),
 
     QueueNameBin = <<"mqtt-subscription-", ClientId/binary, "qos0">>,
     QueueName = {resource, <<"/">>, queue, QueueNameBin},
@@ -502,12 +504,16 @@ events(Config) ->
                        {arguments, []}],
                       E2),
     assert_event_type(binding_created, E3),
+    ExpectedBindingArgs = case ?config(mqtt_version, Config) of
+                              v5 -> [{mqtt_subscription_opts, Qos, false, false, 0, undefined}];
+                              _ -> []
+                          end,
     assert_event_prop([{source_name, <<"amq.topic">>},
                        {source_kind, exchange},
                        {destination_name, QueueNameBin},
                        {destination_kind, queue},
                        {routing_key, <<"TopicA">>},
-                       {arguments, []}],
+                       {arguments, ExpectedBindingArgs}],
                       E3),
 
     {ok, _, _} = emqtt:unsubscribe(C, <<"TopicA">>),
@@ -1356,6 +1362,7 @@ trace(Config) ->
     {ok, _, [0]} = emqtt:subscribe(Sub, Topic, qos0),
     {ok, _} = emqtt:publish(Pub, Topic, Payload, qos1),
     ok = expect_publishes(Sub, Topic, [Payload]),
+    timer:sleep(10),
 
     {#'basic.get_ok'{routing_key = <<"publish.amq.topic">>},
      #amqp_msg{props = #'P_basic'{headers = PublishHeaders},
@@ -1494,6 +1501,30 @@ utf8(Config) ->
     {ok, _, [1]} = emqtt:subscribe(C, Topic, qos1),
     {ok, _} = emqtt:publish(C, Topic, <<"msg">>, qos1),
     ok = expect_publishes(C, Topic, [<<"msg">>]),
+    ok = emqtt:disconnect(C).
+
+bind_exchange_to_exchange(Config) ->
+    SourceX = <<"amq.topic">>,
+    DestinationX = <<"destination">>,
+    Q = <<"q">>,
+    Ch = rabbit_ct_client_helpers:open_channel(Config),
+    #'exchange.declare_ok'{} = amqp_channel:call(Ch, #'exchange.declare'{exchange = DestinationX,
+                                                                         durable = true,
+                                                                         auto_delete = true}),
+    #'queue.declare_ok'{} = amqp_channel:call(Ch, #'queue.declare'{queue = Q,
+                                                                   durable = true}),
+    #'queue.bind_ok'{} = amqp_channel:call(Ch, #'queue.bind'{exchange = DestinationX,
+                                                             queue = Q,
+                                                             routing_key = <<"a.b">>}),
+    #'exchange.bind_ok'{} = amqp_channel:call(Ch, #'exchange.bind'{destination = DestinationX,
+                                                                   source = SourceX,
+                                                                   routing_key = <<"*.b">>}),
+    C = connect(?FUNCTION_NAME, Config),
+    %% Message should be routed as follows: SourceX -> DestinationX -> Q
+    {ok, _} = emqtt:publish(C, <<"a/b">>, <<"msg">>, qos1),
+    eventually(?_assertMatch({#'basic.get_ok'{}, #amqp_msg{payload = <<"msg">>}},
+                             amqp_channel:call(Ch, #'basic.get'{queue = Q}))),
+    #'queue.delete_ok'{} = amqp_channel:call(Ch, #'queue.delete'{queue = Q}),
     ok = emqtt:disconnect(C).
 
 %% -------------------------------------------------------------------
