@@ -10,6 +10,7 @@ def all_beam_files(name = "all_beam_files"):
         name = "behaviours",
         srcs = [
             "src/gm.erl",
+            "src/mc.erl",
             "src/rabbit_backing_queue.erl",
             "src/rabbit_credential_validator.erl",
             "src/rabbit_exchange_type.erl",
@@ -66,6 +67,7 @@ def all_test_beam_files(name = "all_test_beam_files"):
         testonly = True,
         srcs = [
             "src/gm.erl",
+            "src/mc.erl",
             "src/rabbit_backing_queue.erl",
             "src/rabbit_credential_validator.erl",
             "src/rabbit_exchange_type.erl",
@@ -1348,4 +1350,13 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/runtime_parameters_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
+    )
+    erlang_bytecode(
+        name = "message_containers_SUITE_beam_files",
+        testonly = True,
+        srcs = ["test/message_containers_SUITE.erl"],
+        outs = ["test/message_containers_SUITE.beam"],
+        app_name = "rabbit",
+        erlc_opts = "//:test_erlc_opts",
+        deps = ["//deps/amqp_client:erlang_app"],
     )
