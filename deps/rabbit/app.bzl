@@ -32,6 +32,7 @@ def all_beam_files(name = "all_beam_files"):
             ["src/**/*.erl"],
             exclude = [
                 "src/gm.erl",
+                "src/mc.erl",
                 "src/rabbit_backing_queue.erl",
                 "src/rabbit_credential_validator.erl",
                 "src/rabbit_exchange_type.erl",
@@ -90,6 +91,7 @@ def all_test_beam_files(name = "all_test_beam_files"):
             ["src/**/*.erl"],
             exclude = [
                 "src/gm.erl",
+                "src/mc.erl",
                 "src/rabbit_backing_queue.erl",
                 "src/rabbit_credential_validator.erl",
                 "src/rabbit_exchange_type.erl",
