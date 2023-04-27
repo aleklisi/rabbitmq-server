@@ -10,6 +10,7 @@ def all_beam_files(name = "all_beam_files"):
         name = "other_beam",
         srcs = [
             "src/rabbit_db_jms_exchange.erl",
+            "src/rabbit_db_jms_exchange_m2k_converter.erl",
             "src/rabbit_jms_topic_exchange.erl",
             "src/sjx_evaluator.erl",
         ],
@@ -18,6 +19,8 @@ def all_beam_files(name = "all_beam_files"):
         dest = "ebin",
         erlc_opts = "//:erlc_opts",
         deps = [
+            "//deps/khepri:erlang_app",
+            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit:erlang_app",
             "//deps/rabbit_common:erlang_app",
         ],
@@ -34,6 +37,7 @@ def all_test_beam_files(name = "all_test_beam_files"):
         testonly = True,
         srcs = [
             "src/rabbit_db_jms_exchange.erl",
+            "src/rabbit_db_jms_exchange_m2k_converter.erl",
             "src/rabbit_jms_topic_exchange.erl",
             "src/sjx_evaluator.erl",
         ],
@@ -42,6 +46,8 @@ def all_test_beam_files(name = "all_test_beam_files"):
         dest = "test",
         erlc_opts = "//:test_erlc_opts",
         deps = [
+            "//deps/khepri:erlang_app",
+            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit:erlang_app",
             "//deps/rabbit_common:erlang_app",
         ],
@@ -65,6 +71,7 @@ def all_srcs(name = "all_srcs"):
         name = "srcs",
         srcs = [
             "src/rabbit_db_jms_exchange.erl",
+            "src/rabbit_db_jms_exchange_m2k_converter.erl",
             "src/rabbit_jms_topic_exchange.erl",
             "src/sjx_evaluator.erl",
         ],

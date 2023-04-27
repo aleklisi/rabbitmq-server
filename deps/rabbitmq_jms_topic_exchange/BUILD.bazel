@@ -44,6 +44,8 @@ rabbitmq_app(
     license_files = [":license_files"],
     priv = [":priv"],
     deps = [
+        "//deps/khepri:erlang_app",
+        "//deps/khepri_mnesia_migration:erlang_app",
         "//deps/rabbit:erlang_app",
         "//deps/rabbit_common:erlang_app",
     ],
@@ -100,3 +102,5 @@ alias(
     actual = ":erlang_app",
     visibility = ["//visibility:public"],
 )
+
+all_test_beam_files(name = "all_test_beam_files")

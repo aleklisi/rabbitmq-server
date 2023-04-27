@@ -211,6 +211,8 @@ rabbitmq_app(
     priv = [":priv"],
     deps = [
         "//deps/amqp10_common:erlang_app",
+        "//deps/khepri:erlang_app",
+        "//deps/khepri_mnesia_migration:erlang_app",
         "//deps/rabbit/apps/rabbitmq_prelaunch:erlang_app",
         "//deps/rabbit_common:erlang_app",
         "@cuttlefish//:erlang_app",
@@ -572,11 +574,11 @@ rabbitmq_integration_suite(
 rabbitmq_integration_suite(
     name = "per_vhost_connection_limit_SUITE",
     size = "medium",
-    flaky = True,
-    shard_count = 10,
     additional_beam = [
         ":cluster_rename_SUITE_beam_files",
     ],
+    flaky = True,
+    shard_count = 10,
 )
 
 rabbitmq_integration_suite(
@@ -1134,6 +1136,11 @@ rabbitmq_integration_suite(
     deps = [
         "@khepri//:erlang_app",
     ],
+)
+
+rabbitmq_integration_suite(
+    name = "metadata_store_migration_SUITE",
+    size = "small",
 )
 
 rabbitmq_integration_suite(

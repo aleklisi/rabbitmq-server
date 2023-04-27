@@ -79,17 +79,25 @@ def all_beam_files(name = "all_beam_files"):
             "src/rabbit_cuttlefish.erl",
             "src/rabbit_db.erl",
             "src/rabbit_db_binding.erl",
+            "src/rabbit_db_binding_m2k_converter.erl",
             "src/rabbit_db_cluster.erl",
             "src/rabbit_db_exchange.erl",
+            "src/rabbit_db_exchange_m2k_converter.erl",
             "src/rabbit_db_maintenance.erl",
+            "src/rabbit_db_maintenance_m2k_converter.erl",
             "src/rabbit_db_msup.erl",
+            "src/rabbit_db_msup_m2k_converter.erl",
             "src/rabbit_db_policy.erl",
             "src/rabbit_db_queue.erl",
+            "src/rabbit_db_queue_m2k_converter.erl",
             "src/rabbit_db_rtparams.erl",
+            "src/rabbit_db_rtparams_m2k_converter.erl",
             "src/rabbit_db_topic_exchange.erl",
             "src/rabbit_db_user.erl",
+            "src/rabbit_db_user_m2k_converter.erl",
             "src/rabbit_db_vhost.erl",
             "src/rabbit_db_vhost_defaults.erl",
+            "src/rabbit_db_vhost_m2k_converter.erl",
             "src/rabbit_dead_letter.erl",
             "src/rabbit_definitions.erl",
             "src/rabbit_definitions_hashing.erl",
@@ -128,6 +136,7 @@ def all_beam_files(name = "all_beam_files"):
             "src/rabbit_global_counters.erl",
             "src/rabbit_guid.erl",
             "src/rabbit_health_check.erl",
+            "src/rabbit_khepri.erl",
             "src/rabbit_limiter.erl",
             "src/rabbit_log_channel.erl",
             "src/rabbit_log_connection.erl",
@@ -231,6 +240,8 @@ def all_beam_files(name = "all_beam_files"):
         erlc_opts = "//:erlc_opts",
         deps = [
             "//deps/amqp10_common:erlang_app",
+            "//deps/khepri:erlang_app",
+            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit_common:erlang_app",
             "@ra//:erlang_app",
             "@ranch//:erlang_app",
@@ -319,17 +330,25 @@ def all_test_beam_files(name = "all_test_beam_files"):
             "src/rabbit_cuttlefish.erl",
             "src/rabbit_db.erl",
             "src/rabbit_db_binding.erl",
+            "src/rabbit_db_binding_m2k_converter.erl",
             "src/rabbit_db_cluster.erl",
             "src/rabbit_db_exchange.erl",
+            "src/rabbit_db_exchange_m2k_converter.erl",
             "src/rabbit_db_maintenance.erl",
+            "src/rabbit_db_maintenance_m2k_converter.erl",
             "src/rabbit_db_msup.erl",
+            "src/rabbit_db_msup_m2k_converter.erl",
             "src/rabbit_db_policy.erl",
             "src/rabbit_db_queue.erl",
+            "src/rabbit_db_queue_m2k_converter.erl",
             "src/rabbit_db_rtparams.erl",
+            "src/rabbit_db_rtparams_m2k_converter.erl",
             "src/rabbit_db_topic_exchange.erl",
             "src/rabbit_db_user.erl",
+            "src/rabbit_db_user_m2k_converter.erl",
             "src/rabbit_db_vhost.erl",
             "src/rabbit_db_vhost_defaults.erl",
+            "src/rabbit_db_vhost_m2k_converter.erl",
             "src/rabbit_dead_letter.erl",
             "src/rabbit_definitions.erl",
             "src/rabbit_definitions_hashing.erl",
@@ -368,6 +387,7 @@ def all_test_beam_files(name = "all_test_beam_files"):
             "src/rabbit_global_counters.erl",
             "src/rabbit_guid.erl",
             "src/rabbit_health_check.erl",
+            "src/rabbit_khepri.erl",
             "src/rabbit_limiter.erl",
             "src/rabbit_log_channel.erl",
             "src/rabbit_log_connection.erl",
@@ -471,6 +491,8 @@ def all_test_beam_files(name = "all_test_beam_files"):
         erlc_opts = "//:test_erlc_opts",
         deps = [
             "//deps/amqp10_common:erlang_app",
+            "//deps/khepri:erlang_app",
+            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit_common:erlang_app",
             "@ra//:erlang_app",
             "@ranch//:erlang_app",
@@ -493,6 +515,7 @@ def all_srcs(name = "all_srcs"):
             "include/amqqueue.hrl",
             "include/amqqueue_v2.hrl",
             "include/gm_specs.hrl",
+            "include/internal_user.hrl",
             "include/rabbit_global_counters.hrl",
             "include/vhost.hrl",
             "include/vhost_v2.hrl",
@@ -509,6 +532,7 @@ def all_srcs(name = "all_srcs"):
     filegroup(
         name = "private_hdrs",
         srcs = [
+            "src/mirrored_supervisor.hrl",
             "src/rabbit_fifo.hrl",
             "src/rabbit_fifo_dlx.hrl",
             "src/rabbit_fifo_v0.hrl",
@@ -574,17 +598,25 @@ def all_srcs(name = "all_srcs"):
             "src/rabbit_cuttlefish.erl",
             "src/rabbit_db.erl",
             "src/rabbit_db_binding.erl",
+            "src/rabbit_db_binding_m2k_converter.erl",
             "src/rabbit_db_cluster.erl",
             "src/rabbit_db_exchange.erl",
+            "src/rabbit_db_exchange_m2k_converter.erl",
             "src/rabbit_db_maintenance.erl",
+            "src/rabbit_db_maintenance_m2k_converter.erl",
             "src/rabbit_db_msup.erl",
+            "src/rabbit_db_msup_m2k_converter.erl",
             "src/rabbit_db_policy.erl",
             "src/rabbit_db_queue.erl",
+            "src/rabbit_db_queue_m2k_converter.erl",
             "src/rabbit_db_rtparams.erl",
+            "src/rabbit_db_rtparams_m2k_converter.erl",
             "src/rabbit_db_topic_exchange.erl",
             "src/rabbit_db_user.erl",
+            "src/rabbit_db_user_m2k_converter.erl",
             "src/rabbit_db_vhost.erl",
             "src/rabbit_db_vhost_defaults.erl",
+            "src/rabbit_db_vhost_m2k_converter.erl",
             "src/rabbit_dead_letter.erl",
             "src/rabbit_definitions.erl",
             "src/rabbit_definitions_hashing.erl",
@@ -624,6 +656,7 @@ def all_srcs(name = "all_srcs"):
             "src/rabbit_global_counters.erl",
             "src/rabbit_guid.erl",
             "src/rabbit_health_check.erl",
+            "src/rabbit_khepri.erl",
             "src/rabbit_limiter.erl",
             "src/rabbit_log_channel.erl",
             "src/rabbit_log_connection.erl",
@@ -780,7 +813,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/classic_queue_prop_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "@proper//:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app"],
     )
     erlang_bytecode(
         name = "cluster_SUITE_beam_files",
@@ -825,7 +858,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/confirms_rejects_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
     )
     erlang_bytecode(
         name = "consumer_timeout_SUITE_beam_files",
@@ -896,7 +929,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/dynamic_ha_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "@proper//:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
     )
     erlang_bytecode(
         name = "dynamic_qq_SUITE_beam_files",
@@ -985,7 +1018,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/lqueue_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["@proper//:erlang_app"],
+        deps = ["//deps/proper:erlang_app"],
     )
     erlang_bytecode(
         name = "maintenance_mode_SUITE_beam_files",
@@ -1021,7 +1054,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/metrics_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbit_common:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "@proper//:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
     )
     erlang_bytecode(
         name = "mirrored_supervisor_SUITE_beam_files",
@@ -1253,7 +1286,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/rabbit_direct_reply_to_prop_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["@proper//:erlang_app"],
+        deps = ["//deps/proper:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_fifo_SUITE_beam_files",
@@ -1301,7 +1334,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         hdrs = ["src/rabbit_fifo.hrl", "src/rabbit_fifo_dlx.hrl"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/rabbit_common:erlang_app", "@proper//:erlang_app"],
+        deps = ["//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_fifo_v0_SUITE_beam_files",
@@ -1339,7 +1372,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/rabbit_stream_queue_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "@proper//:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_stream_sac_coordinator_SUITE_beam_files",
@@ -1419,7 +1452,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/term_to_binary_compat_prop_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/rabbit_common:erlang_app", "@proper//:erlang_app"],
+        deps = ["//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app"],
     )
     erlang_bytecode(
         name = "test_channel_operation_timeout_test_queue_beam",
@@ -1579,7 +1612,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/unit_access_control_credential_validation_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["@proper//:erlang_app"],
+        deps = ["//deps/proper:erlang_app"],
     )
     erlang_bytecode(
         name = "unit_amqp091_content_framing_SUITE_beam_files",
@@ -1935,4 +1968,40 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/runtime_parameters_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
+    )
+    erlang_bytecode(
+        name = "metadata_store_clustering_SUITE_beam_files",
+        testonly = True,
+        srcs = ["test/metadata_store_clustering_SUITE.erl"],
+        outs = ["test/metadata_store_clustering_SUITE.beam"],
+        app_name = "rabbit",
+        erlc_opts = "//:test_erlc_opts",
+        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
+    )
+    erlang_bytecode(
+        name = "metadata_store_migration_SUITE_beam_files",
+        testonly = True,
+        srcs = ["test/metadata_store_migration_SUITE.erl"],
+        outs = ["test/metadata_store_migration_SUITE.beam"],
+        app_name = "rabbit",
+        erlc_opts = "//:test_erlc_opts",
+        deps = ["//deps/amqp_client:erlang_app"],
+    )
+    erlang_bytecode(
+        name = "metadata_store_phase1_SUITE_beam_files",
+        testonly = True,
+        srcs = ["test/metadata_store_phase1_SUITE.erl"],
+        outs = ["test/metadata_store_phase1_SUITE.beam"],
+        app_name = "rabbit",
+        erlc_opts = "//:test_erlc_opts",
+        deps = ["//deps/khepri:erlang_app", "//deps/rabbit_common:erlang_app"],
+    )
+    erlang_bytecode(
+        name = "routing_SUITE_beam_files",
+        testonly = True,
+        srcs = ["test/routing_SUITE.erl"],
+        outs = ["test/routing_SUITE.beam"],
+        app_name = "rabbit",
+        erlc_opts = "//:test_erlc_opts",
+        deps = ["//deps/amqp_client:erlang_app"],
     )

@@ -11,6 +11,7 @@ def all_beam_files(name = "all_beam_files"):
         srcs = [
             "src/Elixir.RabbitMQ.CLI.Diagnostics.Commands.ConsistentHashExchangeRingStateCommand.erl",
             "src/rabbit_db_ch_exchange.erl",
+            "src/rabbit_db_ch_exchange_m2k_converter.erl",
             "src/rabbit_exchange_type_consistent_hash.erl",
         ],
         hdrs = [":public_and_private_hdrs"],
@@ -18,6 +19,8 @@ def all_beam_files(name = "all_beam_files"):
         dest = "ebin",
         erlc_opts = "//:erlc_opts",
         deps = [
+            "//deps/khepri:erlang_app",
+            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit:erlang_app",
             "//deps/rabbit_common:erlang_app",
             "//deps/rabbitmq_cli:erlang_app",
@@ -36,6 +39,7 @@ def all_test_beam_files(name = "all_test_beam_files"):
         srcs = [
             "src/Elixir.RabbitMQ.CLI.Diagnostics.Commands.ConsistentHashExchangeRingStateCommand.erl",
             "src/rabbit_db_ch_exchange.erl",
+            "src/rabbit_db_ch_exchange_m2k_converter.erl",
             "src/rabbit_exchange_type_consistent_hash.erl",
         ],
         hdrs = [":public_and_private_hdrs"],
@@ -43,6 +47,8 @@ def all_test_beam_files(name = "all_test_beam_files"):
         dest = "test",
         erlc_opts = "//:test_erlc_opts",
         deps = [
+            "//deps/khepri:erlang_app",
+            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit:erlang_app",
             "//deps/rabbit_common:erlang_app",
             "//deps/rabbitmq_cli:erlang_app",
@@ -68,6 +74,7 @@ def all_srcs(name = "all_srcs"):
         srcs = [
             "src/Elixir.RabbitMQ.CLI.Diagnostics.Commands.ConsistentHashExchangeRingStateCommand.erl",
             "src/rabbit_db_ch_exchange.erl",
+            "src/rabbit_db_ch_exchange_m2k_converter.erl",
             "src/rabbit_exchange_type_consistent_hash.erl",
         ],
     )
