@@ -137,7 +137,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/exometer_slide_SUITE.beam"],
         app_name = "rabbitmq_management_agent",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "metrics_SUITE_beam_files",
@@ -165,5 +165,5 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/rabbit_mgmt_slide_SUITE.beam"],
         app_name = "rabbitmq_management_agent",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )

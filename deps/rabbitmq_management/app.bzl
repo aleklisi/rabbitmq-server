@@ -480,7 +480,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/cache_SUITE.beam"],
         app_name = "rabbitmq_management",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "clustering_SUITE_beam_files",
@@ -498,7 +498,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/clustering_prop_SUITE.beam"],
         app_name = "rabbitmq_management",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "//deps/rabbitmq_management_agent:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbit_common:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "//deps/rabbitmq_management_agent:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "config_schema_SUITE_beam_files",
@@ -559,7 +559,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/rabbit_mgmt_stats_SUITE.beam"],
         app_name = "rabbitmq_management",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app", "//deps/rabbitmq_management_agent:erlang_app"],
+        deps = ["//deps/rabbitmq_management_agent:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_mgmt_test_db_SUITE_beam_files",
@@ -586,7 +586,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/stats_SUITE.beam"],
         app_name = "rabbitmq_management",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app", "//deps/rabbitmq_management_agent:erlang_app"],
+        deps = ["//deps/rabbitmq_management_agent:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "test_rabbit_mgmt_runtime_parameters_util_beam",

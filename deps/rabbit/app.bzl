@@ -240,9 +240,9 @@ def all_beam_files(name = "all_beam_files"):
         erlc_opts = "//:erlc_opts",
         deps = [
             "//deps/amqp10_common:erlang_app",
-            "//deps/khepri:erlang_app",
-            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit_common:erlang_app",
+            "@khepri//:erlang_app",
+            "@khepri_mnesia_migration//:erlang_app",
             "@ra//:erlang_app",
             "@ranch//:erlang_app",
             "@stdout_formatter//:erlang_app",
@@ -491,9 +491,9 @@ def all_test_beam_files(name = "all_test_beam_files"):
         erlc_opts = "//:test_erlc_opts",
         deps = [
             "//deps/amqp10_common:erlang_app",
-            "//deps/khepri:erlang_app",
-            "//deps/khepri_mnesia_migration:erlang_app",
             "//deps/rabbit_common:erlang_app",
+            "@khepri//:erlang_app",
+            "@khepri_mnesia_migration//:erlang_app",
             "@ra//:erlang_app",
             "@ranch//:erlang_app",
             "@stdout_formatter//:erlang_app",
@@ -813,7 +813,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/classic_queue_prop_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "cluster_SUITE_beam_files",
@@ -929,7 +929,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/dynamic_ha_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "dynamic_qq_SUITE_beam_files",
@@ -1018,7 +1018,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/lqueue_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "maintenance_mode_SUITE_beam_files",
@@ -1054,7 +1054,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/metrics_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbit_common:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "mirrored_supervisor_SUITE_beam_files",
@@ -1286,7 +1286,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/rabbit_direct_reply_to_prop_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_fifo_SUITE_beam_files",
@@ -1334,7 +1334,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         hdrs = ["src/rabbit_fifo.hrl", "src/rabbit_fifo_dlx.hrl"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app"],
+        deps = ["//deps/rabbit_common:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_fifo_v0_SUITE_beam_files",
@@ -1372,7 +1372,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/rabbit_stream_queue_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/amqp_client:erlang_app", "//deps/proper:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app"],
+        deps = ["//deps/amqp_client:erlang_app", "//deps/rabbitmq_ct_helpers:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "rabbit_stream_sac_coordinator_SUITE_beam_files",
@@ -1452,7 +1452,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/term_to_binary_compat_prop_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app", "//deps/rabbit_common:erlang_app"],
+        deps = ["//deps/rabbit_common:erlang_app", "@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "test_channel_operation_timeout_test_queue_beam",
@@ -1612,7 +1612,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/unit_access_control_credential_validation_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "unit_amqp091_content_framing_SUITE_beam_files",
@@ -1994,7 +1994,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         outs = ["test/metadata_store_phase1_SUITE.beam"],
         app_name = "rabbit",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/khepri:erlang_app", "//deps/rabbit_common:erlang_app"],
+        deps = ["//deps/rabbit_common:erlang_app", "@khepri//:erlang_app"],
     )
     erlang_bytecode(
         name = "routing_SUITE_beam_files",

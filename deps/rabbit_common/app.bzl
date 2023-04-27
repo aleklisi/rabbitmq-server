@@ -346,7 +346,7 @@ def test_suite_beam_files(name = "test_suite_beam_files"):
         hdrs = ["include/rabbit.hrl", "include/rabbit_memory.hrl", "include/resource.hrl"],
         app_name = "rabbit_common",
         erlc_opts = "//:test_erlc_opts",
-        deps = ["//deps/proper:erlang_app"],
+        deps = ["@proper//:erlang_app"],
     )
     erlang_bytecode(
         name = "unit_priority_queue_SUITE_beam_files",

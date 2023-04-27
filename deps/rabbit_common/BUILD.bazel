@@ -121,7 +121,6 @@ rabbitmq_app(
         "xmerl",
         "os_mon",
         "runtime_tools",
-        "khepri",
     ],
     license_files = [":license_files"],
     priv = [":priv"],
