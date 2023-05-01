@@ -34,6 +34,12 @@ bazel_dep(
     version = "3.9.14",
 )
 
+git_override(
+    module_name = "rules_erlang",
+    commit = "cebdcb911d5be023d6403da93a744bed8fe895a7",
+    remote = "https://github.com/rabbitmq/rules_erlang.git",
+)
+
 erlang_config = use_extension(
     "@rules_erlang//bzlmod:extensions.bzl",
     "erlang_config",
@@ -110,20 +116,20 @@ use_repo(
 )
 
 register_toolchains(
-    "@erlang_config//24:toolchain",
-    "@erlang_config//24:toolchain2",
-    "@erlang_config//25_0:toolchain",
-    "@erlang_config//25_0:toolchain2",
-    "@erlang_config//25_1:toolchain",
-    "@erlang_config//25_1:toolchain2",
-    "@erlang_config//25_2:toolchain",
-    "@erlang_config//25_2:toolchain2",
-    "@erlang_config//25_3:toolchain",
-    "@erlang_config//25_3:toolchain2",
-    "@erlang_config//26:toolchain",
-    "@erlang_config//26:toolchain2",
-    "@erlang_config//git_master:toolchain",
-    "@erlang_config//git_master:toolchain2",
+    "@erlang_config//24:toolchain_major",
+    "@erlang_config//24:toolchain_major_minor",
+    "@erlang_config//25_0:toolchain_major",
+    "@erlang_config//25_0:toolchain_major_minor",
+    "@erlang_config//25_1:toolchain_major",
+    "@erlang_config//25_1:toolchain_major_minor",
+    "@erlang_config//25_2:toolchain_major",
+    "@erlang_config//25_2:toolchain_major_minor",
+    "@erlang_config//25_3:toolchain_major",
+    "@erlang_config//25_3:toolchain_major_minor",
+    "@erlang_config//26:toolchain_major",
+    "@erlang_config//26:toolchain_major_minor",
+    "@erlang_config//git_master:toolchain_major",
+    "@erlang_config//git_master:toolchain_major_minor",
     "@elixir_config//external:toolchain",
     "@elixir_config//1_13:toolchain",
     "@elixir_config//1_14:toolchain",
@@ -207,8 +213,8 @@ erlang_package.hex_package(
 erlang_package.hex_package(
     name = "gen_batch_server",
     build_file = "@rabbitmq-server//bazel:BUILD.gen_batch_server",
-    sha256 = "94a49a528486298b009d2a1b452132c0a0d68b3e89d17d3764cb1ec879b7557a",
-    version = "0.8.7",
+    sha256 = "c3e6a1a2a0fb62aee631a98cfa0fd8903e9562422cbf72043953e2fb1d203017",
+    version = "0.8.8",
 )
 
 erlang_package.hex_package(
