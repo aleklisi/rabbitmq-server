@@ -30,6 +30,7 @@ DEPS = thoas recon credentials_obfuscation khepri
 
 dep_credentials_obfuscation = hex 3.2.0
 dep_khepri = git https://github.com/rabbitmq/khepri.git main
+dep_horus = git https://github.com/rabbitmq/horus.git main
 
 # Variables and recipes in development.*.mk are meant to be used from
 # any Git clone. They are excluded from the files published to Hex.pm.
