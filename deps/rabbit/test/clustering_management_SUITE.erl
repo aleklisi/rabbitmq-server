@@ -53,7 +53,8 @@ groups() ->
                                                  pid_file_and_await_node_startup,
                                                  await_running_count,
                                                  start_with_invalid_schema_in_path,
-                                                 persistent_cluster_id
+                                                 persistent_cluster_id,
+                                                 reset_last_disc_node
                                                 ]}
                           ]},
                          {clustered_4_nodes, [],
@@ -72,6 +73,7 @@ groups() ->
                                                  forget_removes_things_in_khepri,
                                                  reset_in_khepri,
                                                  reset_removes_things_in_khepri,
+                                                 reset_in_minority,
                                                  force_boot_in_khepri,
                                                  status_with_alarm,
                                                  pid_file_and_await_node_startup_in_khepri,
@@ -591,6 +593,30 @@ reset_removes_things_in_khepri(Config) ->
     ?assertExit(
        {{shutdown, {server_initiated_close, 404, _}}, _},
        declare_passive(HCh, ClassicQueue)),
+
+    ok.
+
+reset_in_minority(Config) ->
+    [Rabbit, Hare | _] = cluster_members(Config),
+
+    rabbit_ct_broker_helpers:stop_node(Config, Hare),
+
+    stop_app(Rabbit),
+    ?assertMatch({error, 75, _}, reset(Rabbit)),
+
+    ok.
+
+reset_last_disc_node(Config) ->
+    Servers = [Rabbit, Hare | _] = cluster_members(Config),
+
+    stop_app(Hare),
+    ?assertEqual(ok, change_cluster_node_type(Hare, ram)),
+    start_app(Hare),
+
+    ok = rabbit_ct_broker_helpers:enable_feature_flag(Config, Servers, raft_based_metadata_store_phase1),
+
+    stop_app(Rabbit),
+    ?assertMatch({error, 69, _}, reset(Rabbit)),
 
     ok.
 
