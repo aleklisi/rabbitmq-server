@@ -48,6 +48,7 @@ groups() ->
                                                  forget_removes_things,
                                                  reset_removes_things,
                                                  forget_offline_removes_things,
+                                                 forget_unavailable_node_in_mnesia,
                                                  force_boot,
                                                  status_with_alarm,
                                                  pid_file_and_await_node_startup,
@@ -71,6 +72,7 @@ groups() ->
                                                  change_cluster_node_type_in_khepri,
                                                  forget_node_in_khepri,
                                                  forget_removes_things_in_khepri,
+                                                 forget_unavailable_node_in_khepri,
                                                  reset_in_khepri,
                                                  reset_removes_things_in_khepri,
                                                  reset_in_minority,
@@ -521,8 +523,6 @@ forget_node_in_khepri(Config) ->
     
     assert_cluster_status({[Rabbit, Hare], [Rabbit, Hare], [Rabbit, Hare]},
                           [Rabbit, Hare]),
-    assert_cluster_status({[Rabbit, Hare], [Rabbit, Hare]},
-                          [Rabbit, Hare]),
     
     ok = stop_app(Rabbit),
     ok = forget_cluster_node(Hare, Rabbit),
@@ -547,6 +547,22 @@ forget_removes_things_in_khepri(Config) ->
        declare_passive(HCh, ClassicQueue)),
 
     ok.
+
+forget_unavailable_node_in_khepri(Config) ->
+    [Rabbit, Hare] = cluster_members(Config),
+
+    ok = rabbit_ct_broker_helpers:stop_node(Config, Rabbit),
+    Ret = forget_cluster_node(Hare, Rabbit),
+
+    ?assertMatch({error, 69, _}, Ret),
+    {error, _, Msg} = Ret,
+    ?assertMatch(match, re:run(Msg, ".*must be running.*", [{capture, none}])).
+
+forget_unavailable_node_in_mnesia(Config) ->
+    [Rabbit, Hare] = cluster_members(Config),
+
+    ok = rabbit_ct_broker_helpers:stop_node(Config, Rabbit),
+    ?assertMatch(ok, forget_cluster_node(Hare, Rabbit)).
 
 reset_in_khepri(Config) ->
     ClassicQueue = <<"classic-queue">>,
