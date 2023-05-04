@@ -815,10 +815,13 @@ change_cluster_node_type_in_khepri(Config) ->
 
     assert_cluster_status({[Rabbit, Hare], [Rabbit, Hare], [Rabbit, Hare]},
                           [Rabbit, Hare]),
-    change_cluster_node_type(Rabbit, ram),
-    assert_cluster_status({[Rabbit, Hare], [Rabbit, Hare], [Rabbit, Hare]},
-                          [Rabbit, Hare]),
-    change_cluster_node_type(Rabbit, disc),
+
+    ok = stop_app(Rabbit),
+    Ret = change_cluster_node_type(Rabbit, ram),
+    is_not_supported(Ret),
+
+    ok = change_cluster_node_type(Rabbit, disc),
+    ok = start_app(Rabbit),
     assert_cluster_status({[Rabbit, Hare], [Rabbit, Hare], [Rabbit, Hare]},
                           [Rabbit, Hare]).
 
