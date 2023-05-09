@@ -86,6 +86,8 @@
 -export([if_has_data/1,
          if_has_data_wildcard/0]).
 
+-export([force_shrink_member_to_current_member/0]).
+
 -ifdef(TEST).
 -export([force_metadata_store/1,
          clear_forced_metadata_store/0]).
@@ -371,6 +373,10 @@ reset() ->
 force_reset() ->
     DataDir = maps:get(data_dir, ra_system:fetch(coordination)),
     ok = rabbit_file:recursive_delete(filelib:wildcard(DataDir ++ "/*")).
+
+force_shrink_member_to_current_member() ->
+    ok = ra_server_proc:force_shrink_members_to_current_member(
+           {?RA_CLUSTER_NAME, node()}).
 
 ensure_ra_system_started() ->
     {ok, _} = application:ensure_all_started(khepri),
