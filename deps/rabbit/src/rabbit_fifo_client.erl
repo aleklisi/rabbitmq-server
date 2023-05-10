@@ -36,6 +36,8 @@
          ]).
 
 -include_lib("rabbit_common/include/rabbit.hrl").
+-include_lib("kernel/include/logger.hrl").
+-include_lib("rabbit_common/include/logging.hrl").
 
 -define(SOFT_LIMIT, 32).
 -define(TIMER_TIME, 10000).
@@ -253,7 +255,7 @@ dequeue(ConsumerTag, Settlement,
                        _ -> 0
                     end,
             IsDelivered = Count > 0,
-            Msg = add_delivery_count_header(Msg0, Count),
+            Msg = add_delivery_count_header(Msg0, QName, Count),
             {ok, MsgsReady,
              {QName, qref(Leader), MsgId, IsDelivered, Msg},
              State0#state{leader = Leader}};
@@ -263,12 +265,24 @@ dequeue(ConsumerTag, Settlement,
             Err
     end.
 
-add_delivery_count_header(#basic_message{} = Msg0, Count)
+add_delivery_count_header(#basic_message{} = Msg0, QName, Count)
   when is_integer(Count) ->
+    maybe_log_when_x_delivery_count_is_high(Msg0, QName, Count),
     rabbit_basic:add_header(<<"x-delivery-count">>, long, Count, Msg0);
-add_delivery_count_header(Msg, _Count) ->
+add_delivery_count_header(Msg, _QName, _Count) ->
     Msg.
 
+maybe_log_when_x_delivery_count_is_high(#basic_message{id = MsgId},
+    #resource{virtual_host = VirtualHost, name = QueueName, kind = queue}, Count) ->
+    HighCount = application:get_env(rabbit, high_x_delivery_count_warning_limit, 10_000),
+    case Count of
+        C when C < HighCount ->
+            ok;
+        _ ->
+            Fmt = "Message with ID ~p in queue ~p in vhost ~p has high x-delivery-count (~p)",
+            Args = [MsgId, QueueName, VirtualHost, Count],
+            ?LOG_WARNING(Fmt, Args, #{domain => ?RMQLOG_DOMAIN_PRELAUNCH})
+    end.
 
 %% @doc Settle a message. Permanently removes message from the queue.
 %% @param ConsumerTag the tag uniquely identifying the consumer.
@@ -809,7 +823,7 @@ transform_msgs(QName, QRef, Msgs) ->
       fun({MsgId, {MsgHeader, Msg0}}) ->
               {Msg, Redelivered} = case MsgHeader of
                                        #{delivery_count := C} ->
-                                           {add_delivery_count_header(Msg0, C), true};
+                                           {add_delivery_count_header(Msg0, QName, C), true};
                                        _ ->
                                            {Msg0, false}
                                    end,
