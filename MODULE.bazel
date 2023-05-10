@@ -300,11 +300,11 @@ erlang_package.hex_package(
     version = "0.2.1",
 )
 
-erlang_package.hex_package(
+erlang_package.git_package(
     name = "ra",
     build_file = "@rabbitmq-server//bazel:BUILD.ra",
-    sha256 = "13b03f02cf6c1837c527edd4a953f0c09da0abad0af6985b64bfd66943c4c5c3",
-    version = "2.5.1",
+    commit = "9fe751e07538c2d5eaea1ee7dbae6f9ba98781dc",
+    repository = "rabbitmq/ra"
 )
 
 erlang_package.hex_package(
